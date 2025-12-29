@@ -33,20 +33,27 @@ export default function SkillsSection() {
   }
 
   return (
-    <section id="skills" className="section-container relative z-10">
-      <h2 className="section-title text-center">Skills & Tech Stack</h2>
+    <section
+      id="skills"
+      className="section-container relative z-10 bg-white text-black"
+    >
+      <h2 className="section-title text-center text-black">Skills & Tech Stack</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
         {Object.entries(skills).map(([key, skill]) => (
-          <HoverAnimate key={key} variant="card" className="card">
+          <HoverAnimate
+            key={key}
+            variant="card"
+            className="card bg-white text-black border-black/10"
+          >
             <div className="text-center mb-4">
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl ${colorClasses[skill.color as keyof typeof colorClasses]} mb-4 icon-hover`}>
                 <span className="text-3xl">{skill.icon}</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-100 capitalize">{key}</h3>
+              <h3 className="text-xl font-semibold text-black capitalize">{key}</h3>
             </div>
             <ul className="space-y-3">
               {skill.items.map((item, index) => (
-                <li key={index} className="text-gray-300 flex items-center text-sm">
+                <li key={index} className="text-gray-700 flex items-center text-sm">
                   <span className={`w-2 h-2 rounded-full mr-3 ${colorClasses[skill.color as keyof typeof colorClasses].split(' ')[0]}`}></span>
                   {item}
                 </li>

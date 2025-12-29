@@ -173,8 +173,8 @@ export default function FuturisticBackground() {
       ref={containerRef}
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
     >
-      {/* Base gradient background - Charcoal → Deep Teal → Soft Lavender */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-teal-900 to-purple-800" />
+      {/* Base black background */}
+      <div className="absolute inset-0 bg-black" />
 
       {/* Texture overlay - radial dots pattern */}
       <div

@@ -5,21 +5,20 @@ import { useState, useEffect } from 'react'
 const sections = [
   { id: 'cover', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'services', label: 'Services' },
   { id: 'team', label: 'Team' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
-  { id: 'code', label: 'Code Samples' },
+  { id: 'code', label: 'Code' },
   { id: 'contact', label: 'Contact' },
 ]
 
 export default function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('cover')
-  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-      
       const scrollPosition = window.scrollY + 100
       const reversedSections = [...sections].reverse()
       for (const section of reversedSections) {
@@ -39,43 +38,67 @@ export default function Navigation() {
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
+      setIsMenuOpen(false)
     }
   }
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-gray-900/80 backdrop-blur-md shadow-lg py-3 border-b border-gray-700/50'
-          : 'bg-transparent py-4'
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
+          {/* Logo */}
           <div
             onClick={() => scrollToSection('cover')}
-            className="cursor-pointer font-bold text-xl bg-gradient-to-r from-teal-300 via-violet-300 to-lavender-300 bg-clip-text text-transparent hover:from-teal-200 hover:via-violet-200 hover:to-lavender-200 transition-all"
+            className="cursor-pointer font-bold text-xl text-white"
           >
             DevSquad
           </div>
-          <div className="hidden md:flex space-x-6">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`text-sm font-medium transition-colors ${
-                  activeSection === section.id
-                    ? 'text-teal-300'
-                    : 'text-gray-300 hover:text-violet-300'
-                }`}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
+
+          {/* Menu Button (text + double line icon) */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="flex items-center gap-3 text-white focus:outline-none"
+            aria-label="Menu"
+          >
+            <span className="text-sm font-normal lowercase">menu</span>
+            <span className="flex flex-col justify-between h-4 w-6">
+              <span className="h-px w-full bg-white" />
+              <span className="h-px w-full bg-white" />
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/95 z-40 pt-24"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col space-y-6 text-left">
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`text-3xl md:text-4xl font-light tracking-wide transition-colors ${
+                    activeSection === section.id
+                      ? 'text-white'
+                      : 'text-gray-500 hover:text-white'
+                  }`}
+                >
+                  {section.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
+
 
